@@ -1,0 +1,31 @@
+//* conect Bootstrap
+@import url('../../../node_modules/bootstrap/dist/css/bootstrap.min.css');
+
+//* pags
+@import url('./02-home.scss');
+@import url('./03-contact.scss');
+@import url('./04-addContact.scss');
+@import url('./header.scss');
+
+
+// #D4AF37
+
+* {
+   margin: 0;
+   padding: 0;
+}
+
+body {
+   background-image: linear-gradient(to right, rgb(24, 118, 118), #2c3f5a, #1a2432);
+
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p {
+   color: aliceblue;
+}
