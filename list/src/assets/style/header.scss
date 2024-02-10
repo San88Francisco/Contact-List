@@ -8,6 +8,11 @@ header {
 
    z-index: 2;
 
+   .container-fluid {
+      max-width: 1200px;
+      margin: 0 auto;
+   }
+
    .logo {
       filter: drop-shadow(2px 2px 4px rgba(0, 0, 0, 0.5));
    }

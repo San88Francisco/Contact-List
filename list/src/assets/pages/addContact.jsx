@@ -6,14 +6,19 @@ import {v4 as uuidv4} from 'uuid'
 //валідація
 import * as Yup from 'yup'
 
+//* hooks
+import {useNavigate} from 'react-router-dom'
+
 //* components
 import InputReg from '../components/InputReg'
 
-const AddContact = () => {
+const AddContact = ({setUsersItems}) => {
    const initialValues = {
       id: uuidv4(),
       firstName: '',
       lastName: '',
+      phone: '',
+      inst: '',
       email: '',
       avatarLink: '',
       gender: '',
@@ -24,6 +29,8 @@ const AddContact = () => {
    const validationSchema = Yup.object().shape({
       firstName: Yup.string().required('First Name is required'),
       lastName: Yup.string().required('Last Name is required'),
+      lastName: Yup.string().required('Inst is required'),
+      phone: Yup.number().required('Phone is required'),
       email: Yup.string().email('Invalid email').required('Email is required'),
       avatarLink: Yup.string().url('Invalid url').required('Avatar Link is required'),
       gender: Yup.string().oneOf(['Men', 'Women'], 'Invalid gender').required('Gender is required'),
@@ -33,9 +40,11 @@ const AddContact = () => {
       favorite: Yup.boolean(),
    })
 
+   const navigate = useNavigate()
    const handleSubmit = (values, {setSubmitting}) => {
-      console.log(values)
       setSubmitting(true)
+      setUsersItems(values)
+      navigate('/contact-list')
    }
 
    return (
@@ -50,7 +59,11 @@ const AddContact = () => {
                         <InputReg type='text' options='lastName' name='lastName' />
                      </div>
                      <InputReg type='text' options='avatarLink' name='avatarLink' />
-                     <InputReg type='email' options='email' name='email' />
+                     <InputReg type='text' options='phone' name='phone' />
+                     <div className='double'>
+                        <InputReg type='email' options='email' name='email' />
+                        <InputReg type='text' options='inst' name='inst' />
+                     </div>
                      <div className='container-field'>
                         <label htmlFor='gender'>Gender</label>
                         <Field as='select' name='gender'>
