@@ -4,6 +4,7 @@ import {BrowserRouter as Router, Routes, Route} from 'react-router-dom'
 import Home from './assets/pages/home'
 import AddContact from './assets/pages/addContact'
 import Contact from './assets/pages/conatct'
+import NotFound404 from './assets/pages/notFound404'
 
 import Header from './assets/components/Header'
 
@@ -35,7 +36,7 @@ function App() {
                <Route path='/' element={<Home />} />
                <Route path='/contact-list' element={<Contact usersItems={usersItems} />} />
                <Route path='/add-contact' element={<AddContact setUsersItems={handleAddContact} />} />
-               <Route path='*' element={<Contact />} />
+               <Route path='*' element={<NotFound404 />} />
             </Routes>
          </Router>
       </>

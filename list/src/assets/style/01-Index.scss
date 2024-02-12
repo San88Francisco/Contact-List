@@ -5,6 +5,7 @@
 @import url('./02-home.scss');
 @import url('./03-contact.scss');
 @import url('./04-addContact.scss');
+@import url('./05-notFound.scss');
 @import url('./header.scss');
 
 
@@ -19,7 +20,9 @@ body {
    background-image: linear-gradient(to right, #187676, #2c3f5a, #1a2432);
 }
 
-#root {}
+a {
+   text-decoration: none;
+}
 
 h1,
 h2,
