@@ -38,6 +38,12 @@
          justify-content: space-around;
          margin-top: 10px;
 
+         & div:nth-child(3) {
+            display: flex;
+            flex-direction: column;
+            margin-top: 10px;
+         }
+
          img {
             width: 130px;
             height: 130px;

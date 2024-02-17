@@ -8,24 +8,28 @@ import NotFound404 from './assets/pages/notFound404'
 
 import Header from './assets/components/Header'
 
+import useDataItems from './assets/data/data'
+
 function App() {
-   const [usersItems, setUsersItems] = useState([
-      {
-         id: 'b866d822-17be-4228-9b4c-0206d6fc5346',
-         firstName: 'Anna',
-         lastName: 'Zelenska',
-         phone: '+48576385840',
-         inst: 'verbytskiy_vv',
-         email: 'zelenskaAnna@gmail.com',
-         avatarLink: 'https://i.pinimg.com/originals/20/0e/2f/200e2f27ba370358ade57f9ae0c59acb.jpg',
-         gender: 'women',
-         status: 'friend',
-         favorite: false,
-      },
-   ])
+   const [usersItems, setUsersItems] = useDataItems()
+
    const handleAddContact = (addContact) => {
       setUsersItems((prevUser) => [...prevUser, addContact])
       console.log(usersItems)
+   }
+
+   const [colorVal] = useState(usersItems)
+   const onClickColor = (id, favorite) => {
+      if (id) {
+         const updatedItems = usersItems.map((item) => {
+            if (item.id === id) {
+               return {...item, favorite: !favorite}
+            }
+            return item
+         })
+         setUsersItems(updatedItems)
+         console.log('✌️updatedItems --->', updatedItems)
+      }
    }
 
    return (
@@ -34,7 +38,10 @@ function App() {
             <Header />
             <Routes>
                <Route path='/' element={<Home />} />
-               <Route path='/contact-list' element={<Contact usersItems={usersItems} />} />
+               <Route
+                  path='/contact-list'
+                  element={<Contact usersItems={usersItems} colorVal={colorVal} onClickColor={onClickColor} />}
+               />
                <Route path='/add-contact' element={<AddContact setUsersItems={handleAddContact} />} />
                <Route path='*' element={<NotFound404 />} />
             </Routes>

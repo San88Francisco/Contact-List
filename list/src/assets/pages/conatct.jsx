@@ -1,12 +1,12 @@
 import UsersContact from '../components/UsersContact'
 
-const Contact = ({usersItems}) => {
+const Contact = ({usersItems, colorVal, onClickColor}) => {
    return (
       <>
          <div className='contact-list'>
             <h1>Contact</h1>
             <div className='container-contact'>
-               <UsersContact usersItems={usersItems} />
+               <UsersContact onClickColor={onClickColor} usersItems={usersItems} />
             </div>
          </div>
       </>
