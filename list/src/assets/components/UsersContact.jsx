@@ -1,11 +1,22 @@
 import User from './User'
 
-const UsersContact = ({usersItems, onClickColor}) => {
+const UsersContact = ({usersItems, onClickColorFavorite, onClickDeleteUser, searchValue}) => {
    return (
       <>
-         {usersItems.map((contact) => (
-            <User onClickColor={onClickColor} usersItems={usersItems} key={contact.id} {...contact} />
-         ))}
+         {usersItems
+            .filter((obj) => {
+               const fullName = (obj.firstName + obj.lastName + obj.email + obj.gender + obj.status).toLowerCase()
+               return fullName.includes(searchValue.toLowerCase())
+            })
+            .map((contact) => (
+               <User
+                  onClickDeleteUser={onClickDeleteUser}
+                  onClickColorFavorite={onClickColorFavorite}
+                  usersItems={usersItems}
+                  key={contact.id}
+                  {...contact}
+               />
+            ))}
       </>
    )
 }

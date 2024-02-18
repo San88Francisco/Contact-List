@@ -1,6 +1,7 @@
 import {Link} from 'react-router-dom'
 
-const Header = () => {
+const Header = ({searchValue, onChangeSearch}) => {
+   console.log('✌️searchValue --->', searchValue)
    return (
       <header className='navbar navbar-expand-lg'>
          <div className='container-fluid'>
@@ -37,10 +38,14 @@ const Header = () => {
                   </li>
                </ul>
                <form className='d-flex' role='search'>
-                  <input className='form-control me-2' type='search' placeholder='Search' aria-label='Search' />
-                  <button className='btn btn-outline-success' type='submit'>
-                     Search
-                  </button>
+                  <input
+                     value={searchValue}
+                     onChange={onChangeSearch}
+                     className='form-control me-2'
+                     type='search'
+                     placeholder='Search'
+                     aria-label='Search'
+                  />
                </form>
             </div>
          </div>

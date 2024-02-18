@@ -1,12 +1,25 @@
 import {Link} from 'react-router-dom'
 
-const User = ({id, favorite, avatarLink, firstName, lastName, status, phone, inst, email, onClickColor}) => {
+const User = ({
+   id,
+   favorite,
+   avatarLink,
+   firstName,
+   lastName,
+   status,
+   phone,
+   inst,
+   email,
+   onClickColorFavorite,
+   usersItems,
+   onClickDeleteUser,
+}) => {
    return (
       <div className='user-contact' key={id}>
          <div>
             <i
                className='fa-solid fa-star'
-               onClick={() => onClickColor(id, favorite)}
+               onClick={() => onClickColorFavorite(id, favorite, usersItems)}
                style={{color: favorite ? 'yellow' : 'silver'}}
             ></i>
             <img src={avatarLink} alt='' />
@@ -14,13 +27,14 @@ const User = ({id, favorite, avatarLink, firstName, lastName, status, phone, ins
                <Link to='/detalyInfo'>
                   <i className='fa-solid fa-pencil'></i>
                </Link>
-               <i className='fa-solid fa-trash-can'></i>
+               <i className='fa-solid fa-trash-can' onClick={() => onClickDeleteUser(id)}></i>
             </div>
          </div>
          <div>
             <h2>
                {firstName} {lastName}
             </h2>
+            <h4>{email}</h4>
             <h3>{status}</h3>
          </div>
          <div>
