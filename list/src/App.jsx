@@ -11,24 +11,36 @@ import NotFound404 from './assets/pages/notFound404'
 import Header from './assets/components/Header'
 
 function App() {
+   const [allItems, setallItems] = useState([])
    const [usersItems, setUsersItems] = useState([])
    const [searchValue, setSearchValue] = useState('')
    const [categoryId, setCategoryId] = useState('All')
    const [page, setPage] = useState(1)
+   const [isLoading, setIsLoading] = useState(true)
 
    const all = categoryId && categoryId !== 'All' ? `status=${categoryId}` : ''
    const favorite = categoryId === 'Favorite' ? 'favorite=true' : ''
+
    useEffect(() => {
-      fetch(`https://65d1f0ac987977636bfbb181.mockapi.io/Contact?page=${page}&limit=6&${favorite || all}`)
-         .then((res) => res.json())
-         .then((json) => {
-            setUsersItems(json)
-            console.log('✌️json.usersItems --->', json)
+      Promise.all([
+         fetch(`https://65d1f0ac987977636bfbb181.mockapi.io/Contact?page=${page}&limit=6&${favorite || all}`).then(
+            (res) => res.json()
+         ),
+         fetch(`https://65d1f0ac987977636bfbb181.mockapi.io/Contact`).then((res) => res.json()),
+      ])
+         .then(([pagedData, allData]) => {
+            setUsersItems(pagedData)
+            setallItems(allData.length)
+            console.log('✌️ Paged Data:', pagedData)
+            console.log('✌️ Total items:', allData.length)
          })
          .catch((err) => {
             console.warn(err)
          })
-   }, [categoryId, page])
+         .finally(() => {
+            setIsLoading(false)
+         })
+   }, [categoryId, page, favorite, all])
 
    //* - контакт
    const onClickDeleteUser = async (id) => {
@@ -146,6 +158,8 @@ function App() {
                         setCategoryId={setCategoryId}
                         page={page}
                         setPage={setPage}
+                        isLoading={isLoading}
+                        allItems={allItems}
                      />
                   }
                />

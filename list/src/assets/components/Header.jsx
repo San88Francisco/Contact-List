@@ -6,7 +6,7 @@ const Header = ({searchValue, onChangeSearch}) => {
       <header className='navbar navbar-expand-lg'>
          <div className='container-fluid'>
             <Link to='/' className='navbar-brand' href='#'>
-               <i class='fa-solid fa-address-book'></i>
+               <i className='fa-solid fa-address-book'></i>
             </Link>
             <button
                className='navbar-toggler'

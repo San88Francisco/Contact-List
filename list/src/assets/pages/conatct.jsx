@@ -1,5 +1,5 @@
 import UsersContact from '../components/UsersContact'
-
+import Skeleton from '../components/ContentLoader'
 const Contact = ({
    usersItems,
    onClickColorFavorite,
@@ -11,7 +11,11 @@ const Contact = ({
    setCategoryId,
    page,
    setPage,
+   isLoading,
+   allItems,
 }) => {
+   const itemsPerPage = 6
+   const totalPages = Math.ceil(allItems / itemsPerPage)
    return (
       <>
          <div className='contact-list'>
@@ -30,21 +34,36 @@ const Contact = ({
                   ))}
                </ul>
                <ul>
-                  {[...Array(5)].map((_, index) => (
-                     <li onClick={() => setPage(index + 1)} id={page === index + 1 ? 'active-block' : ''}>
+                  {[...Array(totalPages)].map((_, index) => (
+                     <li
+                        key={index + 1}
+                        onClick={() => setPage(index + 1)}
+                        id={page === index + 1 ? 'active-block' : ''}
+                     >
                         {index + 1}
                      </li>
                   ))}
                </ul>
             </div>
             <div className='container-contact'>
-               <UsersContact
-                  usersItems={usersItems}
-                  searchValue={searchValue}
-                  onChangeSearch={onChangeSearch}
-                  onClickDeleteUser={onClickDeleteUser}
-                  onClickColorFavorite={onClickColorFavorite}
-               />
+               {isLoading ? (
+                  <div className='skeleton'>
+                     <Skeleton />
+                     <Skeleton />
+                     <Skeleton />
+                     <Skeleton />
+                     <Skeleton />
+                     <Skeleton />
+                  </div>
+               ) : (
+                  <UsersContact
+                     usersItems={usersItems}
+                     searchValue={searchValue}
+                     onChangeSearch={onChangeSearch}
+                     onClickDeleteUser={onClickDeleteUser}
+                     onClickColorFavorite={onClickColorFavorite}
+                  />
+               )}
             </div>
          </div>
       </>
