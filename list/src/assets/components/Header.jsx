@@ -6,7 +6,7 @@ const Header = ({searchValue, onChangeSearch}) => {
       <header className='navbar navbar-expand-lg'>
          <div className='container-fluid'>
             <Link to='/' className='navbar-brand' href='#'>
-               <h1 className='logo'>Contact list</h1>
+               <i class='fa-solid fa-address-book'></i>
             </Link>
             <button
                className='navbar-toggler'
@@ -21,11 +21,6 @@ const Header = ({searchValue, onChangeSearch}) => {
             </button>
             <div className='collapse navbar-collapse' id='navbarSupportedContent'>
                <ul className='navbar-nav me-auto mb-2 mb-lg-0'>
-                  <li className='nav-item'>
-                     <Link to='/' className='nav-link active text-light' aria-current='page' href='#'>
-                        Home
-                     </Link>
-                  </li>
                   <li className='nav-item'>
                      <Link to='/contact-list' className='nav-link text-light' href='#'>
                         Contact

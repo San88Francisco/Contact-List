@@ -1,6 +1,6 @@
 import User from './User'
 
-const UsersContact = ({usersItems, onClickColorFavorite, onClickDeleteUser, searchValue}) => {
+const UsersContact = ({usersItems, onClickColorFavorite, onClickDeleteUser, searchValue, onChangeSearch}) => {
    return (
       <>
          {usersItems
@@ -12,7 +12,6 @@ const UsersContact = ({usersItems, onClickColorFavorite, onClickDeleteUser, sear
                <User
                   onClickDeleteUser={onClickDeleteUser}
                   onClickColorFavorite={onClickColorFavorite}
-                  usersItems={usersItems}
                   key={contact.id}
                   {...contact}
                />

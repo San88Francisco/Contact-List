@@ -2,7 +2,6 @@
 @import url('../../../node_modules/bootstrap/dist/css/bootstrap.min.css');
 
 //* pags
-@import url('./02-home.scss');
 @import url('./03-contact.scss');
 @import url('./04-addContact.scss');
 @import url('./05-notFound.scss');
@@ -31,5 +30,10 @@ h4,
 h5,
 h6,
 p {
+   color: aliceblue;
+}
+
+#active-block {
+   background-color: rgb(154, 27, 27);
    color: aliceblue;
 }

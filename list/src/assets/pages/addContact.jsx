@@ -12,7 +12,7 @@ import {useNavigate} from 'react-router-dom'
 //* components
 import InputReg from '../components/InputReg'
 
-const AddContact = ({setUsersItems}) => {
+const AddContact = ({onAddItem}) => {
    const initialValues = {
       id: uuidv4(),
       firstName: '',
@@ -43,7 +43,8 @@ const AddContact = ({setUsersItems}) => {
    const navigate = useNavigate()
    const handleSubmit = (values, {setSubmitting}) => {
       setSubmitting(true)
-      setUsersItems(values)
+      onAddItem(values)
+      // setUsersItems(values)
       navigate('/contact-list')
    }
 
