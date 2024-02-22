@@ -1,7 +1,6 @@
 import {Link} from 'react-router-dom'
 
 const Header = ({searchValue, onChangeSearch}) => {
-   console.log('✌️searchValue --->', searchValue)
    return (
       <header className='navbar navbar-expand-lg'>
          <div className='container-fluid'>

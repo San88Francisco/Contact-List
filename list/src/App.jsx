@@ -1,5 +1,4 @@
 //* libary
-import {useState, useEffect} from 'react'
 import {BrowserRouter as Router, Routes, Route} from 'react-router-dom'
 
 //* pags
@@ -10,37 +9,36 @@ import NotFound404 from './assets/pages/notFound404'
 //* components
 import Header from './assets/components/Header'
 
+//* hook
+import {useState, useEffect} from 'react'
+import {useSelector, useDispatch} from 'react-redux'
+
+import {fetchData} from './assets/redux/operation/operation'
+
 function App() {
-   const [allItems, setallItems] = useState([])
+   const pageTest = useSelector((state) => state.pageSlice.page)
+
+   const isLoading = useSelector((state) => state.pageSlice.isLoading)
+
+   const allItems = useSelector((state) => state.pageSlice.allItems)
+
+   const dispatch = useDispatch()
+   // const [page, setPage] = useState(1)
+   // const [allItems, setallItems] = useState([])
+   // const [isLoading, setIsLoading] = useState(true)
    const [usersItems, setUsersItems] = useState([])
+
    const [searchValue, setSearchValue] = useState('')
    const [categoryId, setCategoryId] = useState('All')
-   const [page, setPage] = useState(1)
-   const [isLoading, setIsLoading] = useState(true)
 
    const all = categoryId && categoryId !== 'All' ? `status=${categoryId}` : ''
    const favorite = categoryId === 'Favorite' ? 'favorite=true' : ''
 
    useEffect(() => {
-      Promise.all([
-         fetch(`https://65d1f0ac987977636bfbb181.mockapi.io/Contact?page=${page}&limit=6&${favorite || all}`).then(
-            (res) => res.json()
-         ),
-         fetch(`https://65d1f0ac987977636bfbb181.mockapi.io/Contact`).then((res) => res.json()),
-      ])
-         .then(([pagedData, allData]) => {
-            setUsersItems(pagedData)
-            setallItems(allData.length)
-            console.log('✌️ Paged Data:', pagedData)
-            console.log('✌️ Total items:', allData.length)
-         })
-         .catch((err) => {
-            console.warn(err)
-         })
-         .finally(() => {
-            setIsLoading(false)
-         })
-   }, [categoryId, page, favorite, all])
+      if (pageTest) {
+         dispatch(fetchData({pageTest, favorite, all}))
+      }
+   }, [categoryId, pageTest, favorite, all])
 
    //* - контакт
    const onClickDeleteUser = async (id) => {
@@ -78,7 +76,6 @@ function App() {
          }
 
          const data = await response.json()
-         console.log('data', data)
          const updatedUsers = [...usersItems]
          updatedUsers.unshift(obj)
          setUsersItems(updatedUsers)
@@ -156,8 +153,6 @@ function App() {
                         cats={cats}
                         categoryId={categoryId}
                         setCategoryId={setCategoryId}
-                        page={page}
-                        setPage={setPage}
                         isLoading={isLoading}
                         allItems={allItems}
                      />

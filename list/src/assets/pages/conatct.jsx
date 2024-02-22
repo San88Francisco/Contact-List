@@ -1,7 +1,11 @@
 import UsersContact from '../components/UsersContact'
 import Skeleton from '../components/ContentLoader'
+
+import {useSelector, useDispatch} from 'react-redux'
+import {setPage} from '../redux/slices/allSciles'
+import {useEffect, useState} from 'react'
+import {selectItems, selectPage} from '../redux/selectors'
 const Contact = ({
-   usersItems,
    onClickColorFavorite,
    onClickDeleteUser,
    searchValue,
@@ -9,13 +13,28 @@ const Contact = ({
    cats,
    categoryId,
    setCategoryId,
-   page,
-   setPage,
    isLoading,
-   allItems,
 }) => {
-   const itemsPerPage = 6
-   const totalPages = Math.ceil(allItems / itemsPerPage)
+   const dispatch = useDispatch()
+   const items = useSelector(selectItems)
+   const page = useSelector(selectPage)
+   const [pagsNum, setPagsNum] = useState(null)
+   const [itemsPages, setItemsPages] = useState([])
+
+   useEffect(() => {
+      if (items) {
+         const startIndex = (page - 1) * 6
+         const finishIndex = startIndex + 6
+
+         const itemsPerPage = 6
+         const totalPages = Math.ceil(items.length / itemsPerPage)
+         console.log('number', totalPages)
+         const arrayTotalPages = [...Array(totalPages)]
+         setPagsNum(arrayTotalPages)
+         setItemsPages(items.slice(startIndex, finishIndex))
+      }
+   }, [items])
+
    return (
       <>
          <div className='contact-list'>
@@ -34,10 +53,10 @@ const Contact = ({
                   ))}
                </ul>
                <ul>
-                  {[...Array(totalPages)].map((_, index) => (
+                  {pagsNum?.map((_, index) => (
                      <li
                         key={index + 1}
-                        onClick={() => setPage(index + 1)}
+                        onClick={() => dispatch(setPage(index + 1))}
                         id={page === index + 1 ? 'active-block' : ''}
                      >
                         {index + 1}
@@ -57,11 +76,11 @@ const Contact = ({
                   </div>
                ) : (
                   <UsersContact
-                     usersItems={usersItems}
                      searchValue={searchValue}
                      onChangeSearch={onChangeSearch}
                      onClickDeleteUser={onClickDeleteUser}
                      onClickColorFavorite={onClickColorFavorite}
+                     itemsPages={itemsPages}
                   />
                )}
             </div>

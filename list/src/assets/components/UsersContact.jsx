@@ -1,9 +1,10 @@
 import User from './User'
+import {useSelector} from 'react-redux'
 
-const UsersContact = ({usersItems, onClickColorFavorite, onClickDeleteUser, searchValue, onChangeSearch}) => {
+const UsersContact = ({itemsPages, onClickColorFavorite, onClickDeleteUser, searchValue, onChangeSearch}) => {
    return (
       <>
-         {usersItems
+         {itemsPages
             .filter((obj) => {
                const fullName = (obj.firstName + obj.lastName + obj.email + obj.gender + obj.status).toLowerCase()
                return fullName.includes(searchValue.toLowerCase())
