@@ -8,11 +8,14 @@ import * as Yup from 'yup'
 
 //* hooks
 import {useNavigate} from 'react-router-dom'
+import {useDispatch} from 'react-redux'
 
 //* components
 import InputReg from '../components/InputReg'
 
-const AddContact = ({onAddItem}) => {
+import {addData} from '../redux/operation/operation'
+
+const AddContact = () => {
    const initialValues = {
       id: uuidv4(),
       firstName: '',
@@ -40,12 +43,14 @@ const AddContact = ({onAddItem}) => {
       favorite: Yup.boolean(),
    })
 
+   const dispatch = useDispatch()
+
    const navigate = useNavigate()
-   const handleSubmit = (values, {setSubmitting}) => {
+   const handleSubmit = (obj, {setSubmitting}) => {
       setSubmitting(true)
-      onAddItem(values)
-      // setUsersItems(values)
+      // onAddItem(values)
       navigate('/contact-list')
+      dispatch(addData({obj}))
    }
 
    return (

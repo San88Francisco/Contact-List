@@ -1,25 +1,28 @@
 import {Link} from 'react-router-dom'
+import {deleteData} from '../redux/operation/operation'
+import {useDispatch, useSelector} from 'react-redux'
 
-const User = ({
-   id,
-   favorite,
-   avatarLink,
-   firstName,
-   lastName,
-   status,
-   phone,
-   inst,
-   email,
-   onClickColorFavorite,
-   usersItems,
-   onClickDeleteUser,
-}) => {
+import {favoriteData} from '../redux/operation/operation'
+
+const User = ({id, favorite, avatarLink, firstName, lastName, status, phone, inst, email}) => {
+   const dispatch = useDispatch()
+   const onClickDelete = (id) => {
+      dispatch(deleteData({id}))
+   }
+   const allItems = useSelector((state) => state.pageSlice.allItems)
+   console.log('✌️allItems --->', allItems)
+   //* зміна кольору
+   const onClickColorFavorite = (id, favorite) => {
+      console.log('✌️id --->', id)
+      dispatch(favoriteData({id, favorite: !favorite}))
+   }
+
    return (
       <div className='user-contact' key={id}>
          <div>
             <i
                className='fa-solid fa-star'
-               onClick={() => onClickColorFavorite(id, favorite, usersItems)}
+               onClick={() => onClickColorFavorite(id, favorite)}
                style={{color: favorite ? 'yellow' : 'silver'}}
             ></i>
             <img src={avatarLink} alt='' />
@@ -27,7 +30,7 @@ const User = ({
                <Link to='/detalyInfo'>
                   <i className='fa-solid fa-pencil'></i>
                </Link>
-               <i className='fa-solid fa-trash-can' onClick={() => onClickDeleteUser(id)}></i>
+               <i className='fa-solid fa-trash-can' onClick={() => onClickDelete(id)}></i>
             </div>
          </div>
          <div>

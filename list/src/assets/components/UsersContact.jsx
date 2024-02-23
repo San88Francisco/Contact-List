@@ -1,7 +1,6 @@
 import User from './User'
-import {useSelector} from 'react-redux'
 
-const UsersContact = ({itemsPages, onClickColorFavorite, onClickDeleteUser, searchValue, onChangeSearch}) => {
+const UsersContact = ({itemsPages, onClickColorFavorite, searchValue, onChangeSearch}) => {
    return (
       <>
          {itemsPages
@@ -10,12 +9,7 @@ const UsersContact = ({itemsPages, onClickColorFavorite, onClickDeleteUser, sear
                return fullName.includes(searchValue.toLowerCase())
             })
             .map((contact) => (
-               <User
-                  onClickDeleteUser={onClickDeleteUser}
-                  onClickColorFavorite={onClickColorFavorite}
-                  key={contact.id}
-                  {...contact}
-               />
+               <User key={contact.id} {...contact} />
             ))}
       </>
    )

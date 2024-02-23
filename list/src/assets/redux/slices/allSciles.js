@@ -1,5 +1,30 @@
 import { createSlice } from "@reduxjs/toolkit"
-import { fetchData } from "../operation/operation"
+import { fetchData, deleteData, addData, favoriteData } from "../operation/operation"
+const handlePending = (state) => {
+   state.isLoading = true
+}
+const handleRejected = (state, action) => {
+   state.isLoading = false
+   state.error = action.payload
+}
+const handleFulfilled = (state, action) => {
+   state.isLoading = false
+   state.items = action.payload.data
+}
+const handleFulfilledDelete = (state, action) => {
+   const deleteId = action.payload.id
+   state.isLoading = false
+   const updatedUsers = state.items.filter((item) => item.id !== deleteId)
+   state.items = updatedUsers
+}
+const handleFulfilledAdd = (state, action) => {
+   const newId = action.payload.data.obj
+   state.isLoading = false
+
+   state.items = [newId, ...state.items]
+}
+
+
 const initialState = {
    page: 1,
    items: [],
@@ -17,19 +42,38 @@ const pageSlice = createSlice({
    },
    extraReducers: (builder) => {
       //* очікує результат запиту
-      builder.addCase(fetchData.pending, (state, action) => {
-         state.isLoading = true
-      }),
+      builder.addCase(fetchData.pending, handlePending)
+
          //* стан помилки
-         builder.addCase(fetchData.rejected, (state, action) => {
-            state.isLoading = false
-            state.error = action.payload
-         }),
+         .addCase(fetchData.rejected, handleRejected)
+
          //* успішне виконання
-         builder.addCase(fetchData.fulfilled, (state, action) => {
+         .addCase(fetchData.fulfilled, handleFulfilled)
+
+         .addCase(deleteData.pending, handlePending)
+
+         .addCase(deleteData.rejected, handleRejected)
+
+         .addCase(deleteData.fulfilled, handleFulfilledDelete)
+
+         .addCase(addData.pending, handlePending)
+
+         .addCase(addData.rejected, handleRejected)
+
+         .addCase(addData.fulfilled, handleFulfilledAdd)
+
+         .addCase(favoriteData.pending, handlePending)
+         .addCase(favoriteData.rejected, handleRejected)
+         .addCase(favoriteData.fulfilled, (state, action) => {
             state.isLoading = false
-            state.items = action.payload.data
-         })
+            state.items = state.items.map((item) => {
+               if (item.id === action.payload.data.id) {
+                  return { ...item, favorite: action.payload.data.favorite };
+               }
+               return item;
+            });
+         });
+
    }
 })
 

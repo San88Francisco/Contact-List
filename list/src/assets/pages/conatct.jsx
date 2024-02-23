@@ -5,16 +5,7 @@ import {useSelector, useDispatch} from 'react-redux'
 import {setPage} from '../redux/slices/allSciles'
 import {useEffect, useState} from 'react'
 import {selectItems, selectPage} from '../redux/selectors'
-const Contact = ({
-   onClickColorFavorite,
-   onClickDeleteUser,
-   searchValue,
-   onChangeSearch,
-   cats,
-   categoryId,
-   setCategoryId,
-   isLoading,
-}) => {
+const Contact = ({onClickColorFavorite, searchValue, onChangeSearch, cats, categoryId, setCategoryId, isLoading}) => {
    const dispatch = useDispatch()
    const items = useSelector(selectItems)
    const page = useSelector(selectPage)
@@ -78,7 +69,6 @@ const Contact = ({
                   <UsersContact
                      searchValue={searchValue}
                      onChangeSearch={onChangeSearch}
-                     onClickDeleteUser={onClickDeleteUser}
                      onClickColorFavorite={onClickColorFavorite}
                      itemsPages={itemsPages}
                   />
