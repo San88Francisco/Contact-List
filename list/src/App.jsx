@@ -64,7 +64,7 @@ function App() {
             <Header searchValue={searchValue} onChangeSearch={onChangeSearch} />
             <Routes>
                <Route
-                  path='/contact-list'
+                  path='/'
                   element={
                      <Contact
                         searchValue={searchValue}

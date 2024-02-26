@@ -44,12 +44,12 @@ const AddContact = () => {
    })
 
    const dispatch = useDispatch()
-
    const navigate = useNavigate()
+
    const handleSubmit = (obj, {setSubmitting}) => {
       setSubmitting(true)
       // onAddItem(values)
-      navigate('/contact-list')
+      navigate('/')
       dispatch(addData({obj}))
    }
 

@@ -21,7 +21,7 @@ const Header = ({searchValue, onChangeSearch}) => {
             <div className='collapse navbar-collapse' id='navbarSupportedContent'>
                <ul className='navbar-nav me-auto mb-2 mb-lg-0'>
                   <li className='nav-item'>
-                     <Link to='/contact-list' className='nav-link text-light' href='#'>
+                     <Link to='/' className='nav-link text-light' href='#'>
                         Contact
                      </Link>
                   </li>

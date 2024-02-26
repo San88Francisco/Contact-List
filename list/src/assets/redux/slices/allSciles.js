@@ -21,7 +21,7 @@ const handleFulfilledAdd = (state, action) => {
    const newId = action.payload.data.obj
    state.isLoading = false
 
-   state.items = [newId, ...state.items]
+   state.items = [...state.items, newId]
 }
 
 

@@ -28,7 +28,7 @@ export const deleteData = createAsyncThunk('APIdeleteData', async ({ id }, thunk
 export const addData = createAsyncThunk('APIaddData', async ({ obj }, thunkAPI) => {
    try {
       const response = await axios.post(
-         `https://65d1f0ac987977636bfbb181.mockapi.io/Contact`, { obj }
+         `https://65d1f0ac987977636bfbb181.mockapi.io/Contact`, obj
       );
       return { data: response.data };
    } catch (e) {
