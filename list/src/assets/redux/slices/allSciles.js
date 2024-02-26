@@ -28,6 +28,7 @@ const handleFulfilledAdd = (state, action) => {
 const initialState = {
    page: 1,
    items: [],
+   filterItems: [],
    isLoading: false,
    error: null
 }
@@ -38,6 +39,19 @@ const pageSlice = createSlice({
    reducers: {
       setPage(state, action) {
          state.page = action.payload
+      },
+      setSearchValue(state, action) {
+         const searchValue = action.payload;
+
+         const filterArray = state.items.filter(obj => {
+            const fullName = (obj.firstName + obj.lastName + obj.email + obj.gender + obj.status).toLowerCase();
+            const includesArray = fullName.includes(searchValue);
+            console.log('✌️includesArray --->', includesArray);
+            return includesArray;
+         });
+
+         state.filterItems = filterArray.length > 0 ? filterArray : [];
+
       }
    },
    extraReducers: (builder) => {
@@ -48,7 +62,10 @@ const pageSlice = createSlice({
          .addCase(fetchData.rejected, handleRejected)
 
          //* успішне виконання
-         .addCase(fetchData.fulfilled, handleFulfilled)
+         .addCase(fetchData.fulfilled, (state, action) => {
+            state.isLoading = false
+            state.items = action.payload.data
+         })
 
          .addCase(deleteData.pending, handlePending)
 
@@ -77,7 +94,7 @@ const pageSlice = createSlice({
    }
 })
 
-export const { setPage } = pageSlice.actions
+export const { setPage, setSearchValue } = pageSlice.actions
 
 export default pageSlice.reducer
 

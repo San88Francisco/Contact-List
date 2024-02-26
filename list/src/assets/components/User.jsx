@@ -9,8 +9,6 @@ const User = ({id, favorite, avatarLink, firstName, lastName, status, phone, ins
    const onClickDelete = (id) => {
       dispatch(deleteData({id}))
    }
-   const allItems = useSelector((state) => state.pageSlice.allItems)
-   console.log('✌️allItems --->', allItems)
    //* зміна кольору
    const onClickColorFavorite = (id, favorite) => {
       console.log('✌️id --->', id)

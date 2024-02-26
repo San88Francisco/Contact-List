@@ -16,11 +16,11 @@ import {useSelector, useDispatch} from 'react-redux'
 import {fetchData} from './assets/redux/operation/operation'
 
 function App() {
-   const pageTest = useSelector((state) => state.pageSlice.page)
+   const page = useSelector((state) => state.pageSlice.page)
 
    const isLoading = useSelector((state) => state.pageSlice.isLoading)
 
-   const allItems = useSelector((state) => state.pageSlice.allItems)
+   const allItems = useSelector((state) => state.pageSlice.filterItems)
 
    const dispatch = useDispatch()
    // const [page, setPage] = useState(1)
@@ -28,17 +28,17 @@ function App() {
    // const [isLoading, setIsLoading] = useState(true)
    // const [usersItems, setUsersItems] = useState([])
 
-   const [searchValue, setSearchValue] = useState('')
+   // const [searchValue, setSearchValue] = useState('')
    const [categoryId, setCategoryId] = useState('All')
 
    const all = categoryId && categoryId !== 'All' ? `status=${categoryId}` : ''
    const favorite = categoryId === 'Favorite' ? 'favorite=true' : ''
 
    useEffect(() => {
-      if (pageTest) {
-         dispatch(fetchData({pageTest, favorite, all}))
+      if (page) {
+         dispatch(fetchData({page, favorite, all}))
       }
-   }, [categoryId, pageTest, favorite, all])
+   }, [categoryId, page, favorite, all])
 
    const cats = [
       {name: 'All'},
@@ -54,21 +54,19 @@ function App() {
    // }
 
    //* пошук
-   const onChangeSearch = (event) => {
-      setSearchValue(event.target.value)
-   }
+   // const onChangeSearch = (event) => {
+   //    setSearchValue(event.target.value)
+   // }
 
    return (
       <>
          <Router>
-            <Header searchValue={searchValue} onChangeSearch={onChangeSearch} />
+            <Header />
             <Routes>
                <Route
                   path='/'
                   element={
                      <Contact
-                        searchValue={searchValue}
-                        onChangeSearch={onChangeSearch}
                         cats={cats}
                         categoryId={categoryId}
                         setCategoryId={setCategoryId}

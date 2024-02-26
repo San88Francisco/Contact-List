@@ -5,27 +5,35 @@ import {useSelector, useDispatch} from 'react-redux'
 import {setPage} from '../redux/slices/allSciles'
 import {useEffect, useState} from 'react'
 import {selectItems, selectPage} from '../redux/selectors'
-const Contact = ({onClickColorFavorite, searchValue, onChangeSearch, cats, categoryId, setCategoryId, isLoading}) => {
+const Contact = ({onClickColorFavorite, cats, categoryId, setCategoryId, isLoading}) => {
+   const filterArray = useSelector((state) => state.pageSlice.filterItems)
+
    const dispatch = useDispatch()
    const items = useSelector(selectItems)
    const page = useSelector(selectPage)
    const [pagsNum, setPagsNum] = useState(null)
    const [itemsPages, setItemsPages] = useState([])
+   const [filterPages, setFilterPages] = useState([])
+
+   const sliceItems = (array, page) => {
+      const startIndex = (page - 1) * 6
+      const finishIndex = startIndex + 6
+
+      const itemsPerPage = 6
+      const totalPages = Math.ceil(array.length / itemsPerPage)
+      const arrayTotalPages = [...Array(totalPages)]
+      setPagsNum(arrayTotalPages)
+      return array.slice(startIndex, finishIndex)
+   }
 
    useEffect(() => {
-      if (items) {
-         const startIndex = (page - 1) * 6
-         const finishIndex = startIndex + 6
-
-         const itemsPerPage = 6
-         const totalPages = Math.ceil(items.length / itemsPerPage)
-         console.log('number', totalPages)
-         const arrayTotalPages = [...Array(totalPages)]
-         setPagsNum(arrayTotalPages)
-         setItemsPages(items.slice(startIndex, finishIndex))
+      if (items.length > 0) {
+         setItemsPages(sliceItems(items, page))
       }
-   }, [items])
-
+      if (filterArray.length > 0) {
+         setFilterPages(sliceItems(filterArray, page))
+      }
+   }, [items, filterArray])
    return (
       <>
          <div className='contact-list'>
@@ -67,10 +75,9 @@ const Contact = ({onClickColorFavorite, searchValue, onChangeSearch, cats, categ
                   </div>
                ) : (
                   <UsersContact
-                     searchValue={searchValue}
-                     onChangeSearch={onChangeSearch}
                      onClickColorFavorite={onClickColorFavorite}
                      itemsPages={itemsPages}
+                     filterPages={filterPages}
                   />
                )}
             </div>

@@ -1,6 +1,17 @@
 import {Link} from 'react-router-dom'
+import {useDispatch, useSelector} from 'react-redux'
+import {setSearchValue} from '../redux/slices/allSciles' // Переконайтеся, що шлях правильний
 
-const Header = ({searchValue, onChangeSearch}) => {
+const Header = () => {
+   const searchValue = useSelector((state) => state.pageSlice.searchValue)
+   // const [filterUser, setFilterUser] = useState(allItems)
+
+   const dispatch = useDispatch()
+
+   const onChangeSearch = (event) => {
+      dispatch(setSearchValue(event.target.value))
+   }
+
    return (
       <header className='navbar navbar-expand-lg'>
          <div className='container-fluid'>
