@@ -1,5 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit"
 import { fetchData, deleteData, addData, favoriteData } from "../operation/operation"
+
 const handlePending = (state) => {
    state.isLoading = true
 }
@@ -28,9 +29,9 @@ const handleFulfilledAdd = (state, action) => {
 const initialState = {
    page: 1,
    items: [],
-   filterItems: [],
    isLoading: false,
-   error: null
+   error: null,
+   searchValue: '',
 }
 
 const pageSlice = createSlice({
@@ -41,31 +42,19 @@ const pageSlice = createSlice({
          state.page = action.payload
       },
       setSearchValue(state, action) {
-         const searchValue = action.payload;
-
-         const filterArray = state.items.filter(obj => {
-            const fullName = (obj.firstName + obj.lastName + obj.email + obj.gender + obj.status).toLowerCase();
-            const includesArray = fullName.includes(searchValue);
-            console.log('✌️includesArray --->', includesArray);
-            return includesArray;
-         });
-
-         state.filterItems = filterArray.length > 0 ? filterArray : [];
-
-      }
+         state.searchValue = action.payload
+      },
    },
    extraReducers: (builder) => {
       //* очікує результат запиту
-      builder.addCase(fetchData.pending, handlePending)
+      builder
+         .addCase(fetchData.pending, handlePending)
 
          //* стан помилки
          .addCase(fetchData.rejected, handleRejected)
 
          //* успішне виконання
-         .addCase(fetchData.fulfilled, (state, action) => {
-            state.isLoading = false
-            state.items = action.payload.data
-         })
+         .addCase(fetchData.fulfilled, handleFulfilled)
 
          .addCase(deleteData.pending, handlePending)
 
@@ -85,13 +74,12 @@ const pageSlice = createSlice({
             state.isLoading = false
             state.items = state.items.map((item) => {
                if (item.id === action.payload.data.id) {
-                  return { ...item, favorite: action.payload.data.favorite };
+                  return {...item, favorite: action.payload.data.favorite}
                }
-               return item;
-            });
-         });
-
-   }
+               return item
+            })
+         })
+   },
 })
 
 export const { setPage, setSearchValue } = pageSlice.actions

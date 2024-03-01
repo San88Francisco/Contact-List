@@ -1,24 +1,20 @@
 import UsersContact from '../components/UsersContact'
 import Skeleton from '../components/ContentLoader'
-
 import {useSelector, useDispatch} from 'react-redux'
 import {setPage} from '../redux/slices/allSciles'
 import {useEffect, useState} from 'react'
-import {selectItems, selectPage} from '../redux/selectors'
-const Contact = ({onClickColorFavorite, cats, categoryId, setCategoryId, isLoading}) => {
-   const filterArray = useSelector((state) => state.pageSlice.filterItems)
+import { selectItems, selectPage } from '../redux/selectors'
 
+const Contact = ({onClickColorFavorite, cats, categoryId, setCategoryId, isLoading}) => {
    const dispatch = useDispatch()
    const items = useSelector(selectItems)
    const page = useSelector(selectPage)
    const [pagsNum, setPagsNum] = useState(null)
    const [itemsPages, setItemsPages] = useState([])
-   const [filterPages, setFilterPages] = useState([])
 
    const sliceItems = (array, page) => {
       const startIndex = (page - 1) * 6
       const finishIndex = startIndex + 6
-
       const itemsPerPage = 6
       const totalPages = Math.ceil(array.length / itemsPerPage)
       const arrayTotalPages = [...Array(totalPages)]
@@ -30,10 +26,8 @@ const Contact = ({onClickColorFavorite, cats, categoryId, setCategoryId, isLoadi
       if (items.length > 0) {
          setItemsPages(sliceItems(items, page))
       }
-      if (filterArray.length > 0) {
-         setFilterPages(sliceItems(filterArray, page))
-      }
-   }, [items, filterArray])
+   }, [items])
+   
    return (
       <>
          <div className='contact-list'>
@@ -77,7 +71,6 @@ const Contact = ({onClickColorFavorite, cats, categoryId, setCategoryId, isLoadi
                   <UsersContact
                      onClickColorFavorite={onClickColorFavorite}
                      itemsPages={itemsPages}
-                     filterPages={filterPages}
                   />
                )}
             </div>

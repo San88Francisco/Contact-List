@@ -1,6 +1,6 @@
 import {Link} from 'react-router-dom'
 import {deleteData} from '../redux/operation/operation'
-import {useDispatch, useSelector} from 'react-redux'
+import {useDispatch} from 'react-redux'
 
 import {favoriteData} from '../redux/operation/operation'
 
@@ -11,7 +11,6 @@ const User = ({id, favorite, avatarLink, firstName, lastName, status, phone, ins
    }
    //* зміна кольору
    const onClickColorFavorite = (id, favorite) => {
-      console.log('✌️id --->', id)
       dispatch(favoriteData({id, favorite: !favorite}))
    }
 
