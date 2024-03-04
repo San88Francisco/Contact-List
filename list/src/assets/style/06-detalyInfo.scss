@@ -1,0 +1,15 @@
+.detaly-info {
+   height: 90vh;
+   display: flex;
+   align-items: center;
+   margin: 0 50px;
+
+
+   img {
+      width: 450px;
+      height: 450px;
+      object-fit: cover;
+      margin-bottom: 10px;
+      border-radius: 50%;
+   }
+}

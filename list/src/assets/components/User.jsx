@@ -2,7 +2,7 @@ import {Link} from 'react-router-dom'
 import {deleteData} from '../redux/operation/operation'
 import {useDispatch} from 'react-redux'
 
-import {favoriteData} from '../redux/operation/operation'
+import {favoriteData, infoUserData} from '../redux/operation/operation'
 
 const User = ({id, favorite, avatarLink, firstName, lastName, status, phone, inst, email}) => {
    const dispatch = useDispatch()
@@ -12,6 +12,10 @@ const User = ({id, favorite, avatarLink, firstName, lastName, status, phone, ins
    //* зміна кольору
    const onClickColorFavorite = (id, favorite) => {
       dispatch(favoriteData({id, favorite: !favorite}))
+   }
+   const onClickInfoUser = (id) => {
+      dispatch(infoUserData({id}))
+      console.log('✌️id --->', id)
    }
 
    return (
@@ -25,7 +29,7 @@ const User = ({id, favorite, avatarLink, firstName, lastName, status, phone, ins
             <img src={avatarLink} alt='' />
             <div>
                <Link to='/detalyInfo'>
-                  <i className='fa-solid fa-pencil'></i>
+                  <i className='fa-solid fa-pencil' onClick={() => onClickInfoUser(id)}></i>
                </Link>
                <i className='fa-solid fa-trash-can' onClick={() => onClickDelete(id)}></i>
             </div>

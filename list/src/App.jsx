@@ -5,6 +5,7 @@ import {BrowserRouter as Router, Routes, Route} from 'react-router-dom'
 import AddContact from './assets/pages/addContact'
 import Contact from './assets/pages/conatct'
 import NotFound404 from './assets/pages/notFound404'
+import DetalyInfo from './assets/pages/detalyInfo'
 
 //* components
 import Header from './assets/components/Header'
@@ -40,7 +41,7 @@ function App() {
       }
    }, [categoryId, page, favorite, all])
 
-   const cats = [
+   const carts = [
       {name: 'All'},
       {name: 'Favorite'},
       {name: 'Work'},
@@ -67,7 +68,7 @@ function App() {
                   path='/'
                   element={
                      <Contact
-                        cats={cats}
+                        carts={carts}
                         categoryId={categoryId}
                         setCategoryId={setCategoryId}
                         isLoading={isLoading}
@@ -76,6 +77,7 @@ function App() {
                   }
                />
                <Route path='/add-contact' element={<AddContact />} />
+               <Route path='/detalyInfo' element={<DetalyInfo />} />
                <Route path='*' element={<NotFound404 />} />
             </Routes>
          </Router>

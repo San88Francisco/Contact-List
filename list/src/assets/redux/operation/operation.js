@@ -49,5 +49,17 @@ export const favoriteData = createAsyncThunk('APIfavoriteData', async ({ id, fav
    }
 });
 
+export const infoUserData = createAsyncThunk('APIinfoUserData', async ({ id }, thunkAPI) => {
+   try {
+      const response = await axios.put(
+         `https://65d1f0ac987977636bfbb181.mockapi.io/Contact/${id}`, { id }
+      );
+      return { data: response.data };
+   } catch (e) {
+
+      return thunkAPI.rejectWithValue(e.message);
+   }
+});
+
 
 

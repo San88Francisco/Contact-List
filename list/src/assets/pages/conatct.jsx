@@ -3,9 +3,9 @@ import Skeleton from '../components/ContentLoader'
 import {useSelector, useDispatch} from 'react-redux'
 import {setPage} from '../redux/slices/allSciles'
 import {useEffect, useState} from 'react'
-import { selectItems, selectPage } from '../redux/selectors'
+import {selectItems, selectPage} from '../redux/selectors'
 
-const Contact = ({onClickColorFavorite, cats, categoryId, setCategoryId, isLoading}) => {
+const Contact = ({carts, categoryId, setCategoryId, isLoading}) => {
    const dispatch = useDispatch()
    const items = useSelector(selectItems)
    const page = useSelector(selectPage)
@@ -27,7 +27,7 @@ const Contact = ({onClickColorFavorite, cats, categoryId, setCategoryId, isLoadi
          setItemsPages(sliceItems(items, page))
       }
    }, [items])
-   
+
    return (
       <>
          <div className='contact-list'>
@@ -35,7 +35,7 @@ const Contact = ({onClickColorFavorite, cats, categoryId, setCategoryId, isLoadi
             <div className='aside-contact'>
                <ul>
                   <span>filters:</span>
-                  {cats.map((obj) => (
+                  {carts.map((obj) => (
                      <li
                         onClick={() => setCategoryId(obj.name)}
                         id={categoryId === obj.name ? 'active-block' : ''}
@@ -68,10 +68,7 @@ const Contact = ({onClickColorFavorite, cats, categoryId, setCategoryId, isLoadi
                      <Skeleton />
                   </div>
                ) : (
-                  <UsersContact
-                     onClickColorFavorite={onClickColorFavorite}
-                     itemsPages={itemsPages}
-                  />
+                  <UsersContact itemsPages={itemsPages} />
                )}
             </div>
          </div>

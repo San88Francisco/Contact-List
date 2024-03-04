@@ -12,7 +12,7 @@ import {useDispatch} from 'react-redux'
 
 //* components
 import InputReg from '../components/InputReg'
-
+import InputStatus from '../components/InpStatus'
 import {addData} from '../redux/operation/operation'
 
 const AddContact = () => {
@@ -37,9 +37,7 @@ const AddContact = () => {
       email: Yup.string().email('Invalid email').required('Email is required'),
       avatarLink: Yup.string().url('Invalid url').required('Avatar Link is required'),
       gender: Yup.string().oneOf(['Men', 'Women'], 'Invalid gender').required('Gender is required'),
-      status: Yup.string()
-         .oneOf(['Work', 'Family', 'Private', 'Friends'], 'Invalid status')
-         .required('Status is required'),
+      status: Yup.string().oneOf(['Work', 'Family', 'Private', 'Friends'], 'Invalid status').required('Status is required'),
       favorite: Yup.boolean(),
    })
 
@@ -79,7 +77,8 @@ const AddContact = () => {
                         </Field>
                         <ErrorMessage name='gender' component='p' className='text-danger' />
                      </div>
-                     <div className='container-field'>
+                     <InputStatus label={'Status'} name={'status'} options={['Work', 'Family', 'Private', 'Friends']} />
+                     {/* <div className='container-field'>
                         <label htmlFor='status'>Status</label>
                         <Field as='select' name='status'>
                            <option>Choose status</option>
@@ -89,10 +88,10 @@ const AddContact = () => {
                            <option value='Friends'>Friends</option>
                         </Field>
                         <ErrorMessage name='status' component='p' className='text-danger' />
-                     </div>
+                     </div> */}
                      <div className='checkbox-block'>
                         <InputReg type='checkbox' options='favorite' name='favorite' />
-                     </div>{' '}
+                     </div>
                      <button type='submit' className='btn btn-dark' disabled={isSubmitting}>
                         Create
                      </button>
